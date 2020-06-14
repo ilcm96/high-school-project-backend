@@ -4,7 +4,7 @@ WORKDIR /tmp
 
 RUN git clone https://github.com/ilcm96/high-school-project-backend --depth 1
 
-WORKDIR /tmp/programming-club-project-backend
+WORKDIR /tmp/high-school-project-backend
 
 RUN go get -u -d -v ./...
 
