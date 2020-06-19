@@ -8,7 +8,7 @@ WORKDIR /tmp/high-school-project-backend
 
 RUN go get -u -d -v ./...
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-s' -o main main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-s -w' -o main main.go
 
 FROM scratch
 COPY --from=builder /tmp/high-school-project-backend/main /
