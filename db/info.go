@@ -1,7 +1,6 @@
-package web
+package db
 
 import (
-	"github.com/ilcm96/crud-jwt/db"
 	"go.mongodb.org/mongo-driver/bson"
 
 	"context"
@@ -11,19 +10,13 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type User struct {
-	ID   string `json:"id"`
-	PW   string `json:"pw"`
-	Name string `json:"name"`
-}
-
 func Info(c echo.Context) (err error) {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	id := claims["id"].(string)
 
-	collection := db.Client().Database("user").Collection("user")
-	defer db.Client().Disconnect(context.TODO())
+	collection := Client().Database("user").Collection("user")
+	defer Client().Disconnect(context.TODO())
 
 	var result User
 

@@ -3,8 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/ilcm96/crud-jwt/db"
-	"github.com/ilcm96/crud-jwt/web"
+	"github.com/ilcm96/high-school-project-backend/db"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -31,7 +30,7 @@ func main() {
 	e.DELETE("/delete", db.DeleteUser, middleware.JWT([]byte("jwt-secret")))
 
 	// User info
-	e.POST("/info", web.Info, middleware.JWT([]byte("jwt-secret")))
+	e.POST("/info", db.Info, middleware.JWT([]byte("jwt-secret")))
 
 	e.Use(middleware.Logger())
 	e.Logger.Fatal(e.Start(":1323"))
