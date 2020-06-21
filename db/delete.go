@@ -19,7 +19,7 @@ func DeleteUser(c echo.Context) (err error) {
 	ID := claims["id"].(string)
 
 	// Delete user
-	filter := bson.D{{"id", ID}}
+	filter := bson.M{"id": ID}
 	deleteResult, _ := collection.DeleteOne(context.TODO(), filter)
 
 	if deleteResult.DeletedCount != 0 {

@@ -22,7 +22,7 @@ func CreateUser(c echo.Context) (err error) {
 	}
 
 	// Check whether ID already exists
-	filter := bson.D{{"id", u.ID}}
+	filter := bson.M{"id": u.ID}
 	err = collection.FindOne(context.TODO(), filter).Err()
 	if err == nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "ID already exists"})

@@ -20,7 +20,7 @@ func CheckUser(id, pw string) bool {
 	var result User
 
 	// Check whether user exists
-	filter := bson.D{{"id", id}}
+	filter := bson.M{"id": id}
 	err := collection.FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {
 		return false

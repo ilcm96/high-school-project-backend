@@ -47,9 +47,9 @@ func UpdateUser(c echo.Context) (err error) {
 	u.PW = util.HashPW(u.PW)
 
 	// Update user info
-	filter := bson.D{{"id", u.ID}}
-	update := bson.D{
-		{"$set", structToMap(u)},
+	filter := bson.M{"id": u.ID}
+	update := bson.M{
+		"$set": structToMap(u),
 	}
 	updateResult, _ := collection.UpdateOne(context.TODO(), filter, update)
 

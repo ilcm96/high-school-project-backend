@@ -20,7 +20,7 @@ func Info(c echo.Context) (err error) {
 
 	var result User
 
-	filter := bson.D{{"id", id}}
+	filter := bson.M{"id": id}
 	err = collection.FindOne(context.TODO(), filter).Decode(&result)
 	name := result.Name
 
