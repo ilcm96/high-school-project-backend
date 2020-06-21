@@ -22,9 +22,9 @@ func DeleteUser(c echo.Context) (err error) {
 	filter := bson.D{{"id", ID}}
 	deleteResult, _ := collection.DeleteOne(context.TODO(), filter)
 
-	if deleteResult.DeletedCount == 0 {
-		return c.JSON(http.StatusBadRequest, map[string]string{"message": "User not exists"})
-	} else {
+	if deleteResult.DeletedCount != 0 {
 		return c.JSON(http.StatusCreated, map[string]string{"message": "Delete success"})
+	} else {
+		return c.JSON(http.StatusBadRequest, map[string]string{"message": "User not exists"})
 	}
 }
