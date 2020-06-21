@@ -4,6 +4,8 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/ilcm96/high-school-project-backend/util"
+
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -27,7 +29,7 @@ func CreateUser(c echo.Context) (err error) {
 	}
 
 	// Hash PW with bcrypt and replace plain PW to hashed PW
-	u.PW = hashPW(u.PW)
+	u.PW = util.HashPW(u.PW)
 
 	// Insert new user to DB
 	_, err = collection.InsertOne(context.TODO(), u)
