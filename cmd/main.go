@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/ilcm96/high-school-project-backend/db"
+	"github.com/ilcm96/high-school-project-backend/internal/db"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

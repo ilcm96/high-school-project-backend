@@ -4,7 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/ilcm96/high-school-project-backend/util"
+	"github.com/ilcm96/high-school-project-backend/internal/model"
+	"github.com/ilcm96/high-school-project-backend/internal/util"
 
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
@@ -16,7 +17,7 @@ func CreateUser(c echo.Context) (err error) {
 	defer Client().Disconnect(context.TODO())
 
 	// Request Body
-	u := new(User)
+	u := new(model.User)
 	if err = c.Bind(u); err != nil {
 		return echo.ErrInternalServerError
 	}

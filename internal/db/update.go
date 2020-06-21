@@ -5,14 +5,16 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/ilcm96/high-school-project-backend/util"
+	"github.com/ilcm96/high-school-project-backend/internal/model"
+
+	"github.com/ilcm96/high-school-project-backend/internal/util"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func structToMap(update *User) map[string]string {
+func structToMap(update *model.User) map[string]string {
 	// Make map
 	var updateMap map[string]string
 	j, _ := json.Marshal(update)
@@ -37,7 +39,7 @@ func UpdateUser(c echo.Context) (err error) {
 	ID := claims["id"].(string)
 
 	// Request Body
-	u := new(User)
+	u := new(model.User)
 	u.ID = ID
 	if err = c.Bind(u); err != nil {
 		return echo.ErrInternalServerError

@@ -1,6 +1,7 @@
 package db
 
 import (
+	"github.com/ilcm96/high-school-project-backend/internal/model"
 	"go.mongodb.org/mongo-driver/bson"
 
 	"context"
@@ -18,7 +19,7 @@ func Info(c echo.Context) (err error) {
 	collection := Client().Database("user").Collection("user")
 	defer Client().Disconnect(context.TODO())
 
-	var result User
+	var result model.User
 
 	filter := bson.M{"id": id}
 	err = collection.FindOne(context.TODO(), filter).Decode(&result)

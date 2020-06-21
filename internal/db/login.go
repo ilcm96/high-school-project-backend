@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"github.com/ilcm96/high-school-project-backend/internal/model"
 	"net/http"
 	"time"
 
@@ -17,7 +18,7 @@ func CheckUser(id, pw string) bool {
 	defer Client().Disconnect(context.TODO())
 
 	// Struct for containing user info in DB
-	var result User
+	var result model.User
 
 	// Check whether user exists
 	filter := bson.M{"id": id}
@@ -37,7 +38,7 @@ func CheckUser(id, pw string) bool {
 
 func Login(c echo.Context) (err error) {
 	// Request body
-	u := new(User)
+	u := new(model.User)
 	if err = c.Bind(u); err != nil {
 		return echo.ErrInternalServerError
 	}
