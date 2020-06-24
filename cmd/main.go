@@ -32,6 +32,10 @@ func main() {
 	// User info
 	e.POST("/info", db.Info, middleware.JWT([]byte("jwt-secret")))
 
-	e.Use(middleware.Logger())
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: `{"time":"${time_rfc3339}","ip":"${remote_ip}","host":"${host}",` +
+			`"method":"${method}","uri":"${uri}","status":${status},"error":"${error}",` +
+			`"latency":"${latency_human}"}` + "\n",
+	}))
 	e.Logger.Fatal(e.Start(":1323"))
 }
