@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/ilcm96/high-school-project-backend/internal/model"
-	"github.com/ilcm96/high-school-project-backend/internal/util"
+	"github.com/ilcm96/high-school-auth-backend/internal/model"
+	"github.com/ilcm96/high-school-auth-backend/internal/util"
 
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"

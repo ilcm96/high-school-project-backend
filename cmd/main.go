@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/ilcm96/high-school-project-backend/internal/db"
+	"github.com/ilcm96/high-school-auth-backend/internal/db"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -14,7 +14,7 @@ func main() {
 
 	// Main page
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "github.com/ilcm96/high-school-project-backend")
+		return c.String(http.StatusOK, "github.com/ilcm96/high-school-auth-backend")
 	})
 
 	// Sign-up

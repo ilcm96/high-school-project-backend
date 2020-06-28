@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/ilcm96/high-school-project-backend/internal/model"
+	"github.com/ilcm96/high-school-auth-backend/internal/model"
 	"go.mongodb.org/mongo-driver/bson"
 
 	"context"

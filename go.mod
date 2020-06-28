@@ -1,4 +1,4 @@
-module github.com/ilcm96/high-school-project-backend
+module github.com/ilcm96/high-school-auth-backend
 
 go 1.14
 

@@ -2,9 +2,10 @@ package db
 
 import (
 	"context"
-	"github.com/ilcm96/high-school-project-backend/internal/model"
 	"net/http"
 	"time"
+
+	"github.com/ilcm96/high-school-auth-backend/internal/model"
 
 	"golang.org/x/crypto/bcrypt"
 

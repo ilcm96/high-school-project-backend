@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/ilcm96/high-school-project-backend/internal/model"
+	"github.com/ilcm96/high-school-auth-backend/internal/model"
 
-	"github.com/ilcm96/high-school-project-backend/internal/util"
+	"github.com/ilcm96/high-school-auth-backend/internal/util"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
