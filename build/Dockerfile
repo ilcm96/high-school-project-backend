@@ -11,4 +11,6 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-s -w' -o main c
 
 FROM scratch
 COPY --from=builder /tmp/high-school-auth-backend /
+COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
+ENV TZ=Asia/Seoul
 CMD ["/main"]
