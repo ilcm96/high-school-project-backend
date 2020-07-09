@@ -3,7 +3,8 @@ FROM  golang:1.14-buster as builder
 WORKDIR /tmp/high-school-auth-backend
 COPY . .
 
-RUN go get -u -d -v ./...
+RUN go mod tidy \
+    && go get -u -d -v ./...
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-s -w' -o main cmd/main.go \
     && chmod +x upx \
     && ./upx --lzma main
