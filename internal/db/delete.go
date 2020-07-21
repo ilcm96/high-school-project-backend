@@ -16,10 +16,10 @@ func DeleteUser(c echo.Context) (err error) {
 	// Get user ID from token
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	ID := claims["id"].(string)
+	id := claims["id"].(string)
 
 	// Delete user
-	filter := bson.M{"id": ID}
+	filter := bson.M{"id": id}
 	deleteResult, _ := collection.DeleteOne(context.TODO(), filter)
 
 	if deleteResult.DeletedCount != 0 {

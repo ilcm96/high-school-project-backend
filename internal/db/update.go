@@ -36,11 +36,11 @@ func UpdateUser(c echo.Context) (err error) {
 	// Get ID from token
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	ID := claims["id"].(string)
+	id := claims["id"].(string)
 
 	// Request Body
 	u := new(model.User)
-	u.ID = ID
+	u.ID = id
 	if err = c.Bind(u); err != nil {
 		return echo.ErrInternalServerError
 	}
