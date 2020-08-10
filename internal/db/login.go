@@ -15,6 +15,7 @@ import (
 )
 
 func CheckUser(id, pw string) bool {
+	// Set collection
 	collection := Client().Database("user").Collection("user")
 	defer Client().Disconnect(context.TODO())
 
@@ -38,7 +39,7 @@ func CheckUser(id, pw string) bool {
 }
 
 func Login(c echo.Context) (err error) {
-	// Request body
+	// Convert request body to User struct
 	u := new(model.User)
 	if err = c.Bind(u); err != nil {
 		return echo.ErrInternalServerError

@@ -30,6 +30,7 @@ func structToMap(update *model.User) map[string]string {
 }
 
 func UpdateUser(c echo.Context) (err error) {
+	// Set collection
 	collection := Client().Database("user").Collection("user")
 	defer Client().Disconnect(context.TODO())
 

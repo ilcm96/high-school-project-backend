@@ -10,6 +10,7 @@ import (
 )
 
 func DeleteUser(c echo.Context) (err error) {
+	// Set collection
 	collection := Client().Database("user").Collection("user")
 	defer Client().Disconnect(context.TODO())
 
