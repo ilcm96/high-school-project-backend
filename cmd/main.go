@@ -17,20 +17,12 @@ func main() {
 		return c.String(http.StatusOK, "github.com/ilcm96/high-school-auth-backend")
 	})
 
-	// Sign-up
-	e.POST("/sign-up", user.CreateUser)
-
-	// Login
-	e.POST("/login", user.Login)
-
-	// Update User Info
-	e.PUT("/update", user.UpdateUser, middleware.JWT([]byte("jwt-secret")))
-
-	// Delete user
-	e.DELETE("/delete", user.DeleteUser, middleware.JWT([]byte("jwt-secret")))
-
-	// User info
-	e.POST("/info", user.Info, middleware.JWT([]byte("jwt-secret")))
+	// User
+	e.POST("/sign-up", user.CreateUser)                                        // Sign-up
+	e.POST("/login", user.Login)                                               // Login
+	e.PUT("/update", user.UpdateUser, middleware.JWT([]byte("jwt-secret")))    // Update User Info
+	e.DELETE("/delete", user.DeleteUser, middleware.JWT([]byte("jwt-secret"))) // Delete user
+	e.POST("/info", user.Info, middleware.JWT([]byte("jwt-secret")))           // User info
 
 	// Log time, ip, host, method, uri, response status, error, and latency
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
