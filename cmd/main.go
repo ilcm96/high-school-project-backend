@@ -32,6 +32,7 @@ func main() {
 	// User info
 	e.POST("/info", db.Info, middleware.JWT([]byte("jwt-secret")))
 
+	// Log time, ip, host, method, uri, response status, error, and latency
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: `{"time":"${time_rfc3339}","ip":"${remote_ip}","host":"${host}",` +
 			`"method":"${method}","uri":"${uri}","status":${status},"error":"${error}",` +
