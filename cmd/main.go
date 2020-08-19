@@ -10,6 +10,8 @@ import (
 )
 
 func main() {
+	key := "jwt-secret"
+
 	e := echo.New()
 
 	// Main page
@@ -18,11 +20,11 @@ func main() {
 	})
 
 	// User
-	e.POST("/sign-up", user.CreateUser)                                        // Sign-up
-	e.POST("/login", user.Login)                                               // Login
-	e.PUT("/update", user.UpdateUser, middleware.JWT([]byte("jwt-secret")))    // Update User Info
-	e.DELETE("/delete", user.DeleteUser, middleware.JWT([]byte("jwt-secret"))) // Delete user
-	e.POST("/info", user.Info, middleware.JWT([]byte("jwt-secret")))           // User info
+	e.POST("/sign-up", user.CreateUser)                               // Sign-up
+	e.POST("/login", user.Login)                                      // Login
+	e.PUT("/update", user.UpdateUser, middleware.JWT([]byte(key)))    // Update User Info
+	e.DELETE("/delete", user.DeleteUser, middleware.JWT([]byte(key))) // Delete user
+	e.POST("/info", user.Info, middleware.JWT([]byte(key)))           // User info
 
 	// Log time, ip, host, method, uri, response status, error, and latency
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
