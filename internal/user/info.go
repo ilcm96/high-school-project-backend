@@ -1,6 +1,7 @@
-package db
+package user
 
 import (
+	"github.com/ilcm96/high-school-auth-backend/internal/db"
 	"github.com/ilcm96/high-school-auth-backend/internal/model"
 	"go.mongodb.org/mongo-driver/bson"
 
@@ -16,8 +17,8 @@ func Info(c echo.Context) (err error) {
 	claims := user.Claims.(jwt.MapClaims)
 	id := claims["id"].(string)
 
-	collection := Client().Database("user").Collection("user")
-	defer Client().Disconnect(context.TODO())
+	collection := db.Client().Database("user").Collection("user")
+	defer db.Client().Disconnect(context.TODO())
 
 	var result model.User
 

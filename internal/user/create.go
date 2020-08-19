@@ -1,9 +1,10 @@
-package db
+package user
 
 import (
 	"context"
 	"net/http"
 
+	"github.com/ilcm96/high-school-auth-backend/internal/db"
 	"github.com/ilcm96/high-school-auth-backend/internal/model"
 	"github.com/ilcm96/high-school-auth-backend/internal/util"
 
@@ -13,9 +14,9 @@ import (
 
 func CreateUser(c echo.Context) (err error) {
 	// Set collection
-	collection := Client().Database("user").Collection("user")
+	collection := db.Client().Database("user").Collection("user")
 
-	defer Client().Disconnect(context.TODO())
+	defer db.Client().Disconnect(context.TODO())
 
 	// Request Body
 	u := new(model.User)

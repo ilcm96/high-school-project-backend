@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/ilcm96/high-school-auth-backend/internal/db"
+	"github.com/ilcm96/high-school-auth-backend/internal/user"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -18,19 +18,19 @@ func main() {
 	})
 
 	// Sign-up
-	e.POST("/sign-up", db.CreateUser)
+	e.POST("/sign-up", user.CreateUser)
 
 	// Login
-	e.POST("/login", db.Login)
+	e.POST("/login", user.Login)
 
 	// Update User Info
-	e.PUT("/update", db.UpdateUser, middleware.JWT([]byte("jwt-secret")))
+	e.PUT("/update", user.UpdateUser, middleware.JWT([]byte("jwt-secret")))
 
 	// Delete user
-	e.DELETE("/delete", db.DeleteUser, middleware.JWT([]byte("jwt-secret")))
+	e.DELETE("/delete", user.DeleteUser, middleware.JWT([]byte("jwt-secret")))
 
 	// User info
-	e.POST("/info", db.Info, middleware.JWT([]byte("jwt-secret")))
+	e.POST("/info", user.Info, middleware.JWT([]byte("jwt-secret")))
 
 	// Log time, ip, host, method, uri, response status, error, and latency
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{

@@ -1,10 +1,11 @@
-package db
+package user
 
 import (
 	"context"
 	"net/http"
 	"time"
 
+	"github.com/ilcm96/high-school-auth-backend/internal/db"
 	"github.com/ilcm96/high-school-auth-backend/internal/model"
 
 	"golang.org/x/crypto/bcrypt"
@@ -16,8 +17,8 @@ import (
 
 func CheckUser(id, pw string) bool {
 	// Set collection
-	collection := Client().Database("user").Collection("user")
-	defer Client().Disconnect(context.TODO())
+	collection := db.Client().Database("user").Collection("user")
+	defer db.Client().Disconnect(context.TODO())
 
 	// Struct for containing user info in DB
 	var result model.User

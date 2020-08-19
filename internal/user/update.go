@@ -1,12 +1,12 @@
-package db
+package user
 
 import (
 	"context"
 	"encoding/json"
 	"net/http"
 
+	"github.com/ilcm96/high-school-auth-backend/internal/db"
 	"github.com/ilcm96/high-school-auth-backend/internal/model"
-
 	"github.com/ilcm96/high-school-auth-backend/internal/util"
 
 	"github.com/dgrijalva/jwt-go"
@@ -31,8 +31,8 @@ func structToMap(update *model.User) map[string]string {
 
 func UpdateUser(c echo.Context) (err error) {
 	// Set collection
-	collection := Client().Database("user").Collection("user")
-	defer Client().Disconnect(context.TODO())
+	collection := db.Client().Database("user").Collection("user")
+	defer db.Client().Disconnect(context.TODO())
 
 	// Get ID from token
 	user := c.Get("user").(*jwt.Token)
