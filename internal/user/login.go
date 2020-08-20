@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ilcm96/high-school-auth-backend/internal/db"
 	"github.com/ilcm96/high-school-auth-backend/internal/model"
 
 	"golang.org/x/crypto/bcrypt"
@@ -13,12 +12,13 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func CheckUser(id, pw string) bool {
+func CheckUser(id string, pw string, client *mongo.Client) bool {
 	// Set collection
-	collection := db.Client().Database("user").Collection("user")
-	defer db.Client().Disconnect(context.TODO())
+	collection := client.Database("user").Collection("user")
+	defer client.Disconnect(context.TODO())
 
 	// Struct for containing user info in DB
 	var result model.User
@@ -39,31 +39,33 @@ func CheckUser(id, pw string) bool {
 	}
 }
 
-func Login(c echo.Context) (err error) {
-	// Convert request body to User struct
-	u := new(model.User)
-	if err = c.Bind(u); err != nil {
-		return echo.ErrInternalServerError
-	}
+func Login(client *mongo.Client) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// Convert request body to User struct
+		u := new(model.User)
+		if err := c.Bind(u); err != nil {
+			return echo.ErrInternalServerError
+		}
 
-	if CheckUser(u.ID, u.PW) {
-		// New jwt token
-		token := jwt.New(jwt.SigningMethodHS256)
+		if CheckUser(u.ID, u.PW, client) {
+			// New jwt token
+			token := jwt.New(jwt.SigningMethodHS256)
 
-		// Claims
-		claims := token.Claims.(jwt.MapClaims)
-		claims["id"] = u.ID
-		claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+			// Claims
+			claims := token.Claims.(jwt.MapClaims)
+			claims["id"] = u.ID
+			claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
 
-		// Token signed with secret key
-		tokenString, _ := token.SignedString([]byte("jwt-secret"))
+			// Token signed with secret key
+			tokenString, _ := token.SignedString([]byte("jwt-secret"))
 
-		return c.JSON(http.StatusCreated, map[string]string{
-			"token": tokenString,
-		})
-	} else if !CheckUser(u.ID, u.PW) {
-		return echo.ErrUnauthorized
-	} else {
-		return echo.ErrInternalServerError
+			return c.JSON(http.StatusCreated, map[string]string{
+				"token": tokenString,
+			})
+		} else if !CheckUser(u.ID, u.PW, client) {
+			return echo.ErrUnauthorized
+		} else {
+			return echo.ErrInternalServerError
+		}
 	}
 }

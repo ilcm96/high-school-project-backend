@@ -1,9 +1,13 @@
 package main
 
 import (
+	"context"
 	"net/http"
+	"runtime"
 
 	"github.com/ilcm96/high-school-auth-backend/internal/user"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -11,6 +15,9 @@ import (
 
 func main() {
 	key := "jwt-secret"
+	clientOptions := options.Client().ApplyURI(mongodbURI())
+	client, _ := mongo.Connect(context.TODO(), clientOptions)
+	defer client.Disconnect(context.TODO())
 
 	e := echo.New()
 
@@ -20,11 +27,11 @@ func main() {
 	})
 
 	// User
-	e.POST("/sign-up", user.CreateUser)                               // Sign-up
-	e.POST("/login", user.Login)                                      // Login
-	e.PUT("/update", user.UpdateUser, middleware.JWT([]byte(key)))    // Update User Info
-	e.DELETE("/delete", user.DeleteUser, middleware.JWT([]byte(key))) // Delete user
-	e.POST("/info", user.Info, middleware.JWT([]byte(key)))           // User info
+	e.POST("/sign-up", user.CreateUser(client))                               // Sign-up
+	e.POST("/login", user.Login(client))                                      // Login
+	e.PUT("/update", user.UpdateUser(client), middleware.JWT([]byte(key)))    // Update User Info
+	e.DELETE("/delete", user.DeleteUser(client), middleware.JWT([]byte(key))) // Delete user
+	e.POST("/info", user.Info(client), middleware.JWT([]byte(key)))           // User info
 
 	// Log time, ip, host, method, uri, response status, error, and latency
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -33,4 +40,12 @@ func main() {
 			`"latency":"${latency_human}"}` + "\n",
 	}))
 	e.Logger.Fatal(e.Start(":1323"))
+}
+
+func mongodbURI() string {
+	os := runtime.GOOS
+	if os == "windows" {
+		return "mongodb://0.0.0.0:27017"
+	}
+	return "mongodb://root:root@db.sub02111041190.generalvcn.oraclevcn.com:27017"
 }
