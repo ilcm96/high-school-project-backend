@@ -18,7 +18,6 @@ import (
 func CheckUser(id string, pw string, client *mongo.Client) bool {
 	// Set collection
 	collection := client.Database("user").Collection("user")
-	defer client.Disconnect(context.TODO())
 
 	// Struct for containing user info in DB
 	var result model.User

@@ -14,7 +14,6 @@ func DeleteUser(client *mongo.Client) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// Set collection
 		collection := client.Database("user").Collection("user")
-		defer client.Disconnect(context.TODO())
 
 		// Get user ID from token
 		user := c.Get("user").(*jwt.Token)

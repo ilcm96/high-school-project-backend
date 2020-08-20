@@ -19,7 +19,6 @@ func Info(client *mongo.Client) echo.HandlerFunc {
 		id := claims["id"].(string)
 
 		collection := client.Database("user").Collection("user")
-		defer client.Disconnect(context.TODO())
 
 		var result model.User
 

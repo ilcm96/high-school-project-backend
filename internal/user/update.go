@@ -33,7 +33,6 @@ func UpdateUser(client *mongo.Client) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// Set collection
 		collection := client.Database("user").Collection("user")
-		defer client.Disconnect(context.TODO())
 
 		// Get ID from token
 		user := c.Get("user").(*jwt.Token)

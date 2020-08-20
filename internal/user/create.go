@@ -17,8 +17,6 @@ func CreateUser(client *mongo.Client) echo.HandlerFunc {
 		// Set collection
 		collection := client.Database("user").Collection("user")
 
-		defer client.Disconnect(context.TODO())
-
 		// Request Body
 		u := new(model.User)
 		if err := c.Bind(u); err != nil {
