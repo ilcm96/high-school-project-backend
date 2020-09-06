@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"runtime"
 
+	"github.com/ilcm96/high-school-auth-backend/internal/todo"
 	"github.com/ilcm96/high-school-auth-backend/internal/user"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -32,6 +33,13 @@ func main() {
 	e.PUT("/update", user.UpdateUser(client), middleware.JWT([]byte(key)))    // Update User Info
 	e.DELETE("/delete", user.DeleteUser(client), middleware.JWT([]byte(key))) // Delete user
 	e.POST("/info", user.Info(client), middleware.JWT([]byte(key)))           // User info
+
+	// Todo
+	e.GET("/todo", todo.GetAllTodo(client), middleware.JWT([]byte(key)))        // Get all todo
+	e.GET("/todo/:id", todo.GetTodo(client), middleware.JWT([]byte(key)))       // Get single todo
+	e.POST("/todo", todo.CreateTodo(client), middleware.JWT([]byte(key)))       // Create all todo
+	e.PATCH("/todo", todo.UpdateTodo(client), middleware.JWT([]byte(key)))      // Update todo
+	e.DELETE("/todo/:id", todo.DeleteTodo(client), middleware.JWT([]byte(key))) // Delete todo
 
 	// Log time, ip, host, method, uri, response status, error, and latency
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
